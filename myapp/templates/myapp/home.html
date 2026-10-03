@@ -242,11 +242,11 @@
           },
         });
 
-        if (!response.ok) {
-          throw new Error("Django could not queue the task.");
-        }
-
         const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Django could not queue the task.");
+        }
         taskIdEl.innerHTML = `Task id:<br><code>${data.task_id}</code>`;
         pollTask(data.task_id);
       } catch (error) {
